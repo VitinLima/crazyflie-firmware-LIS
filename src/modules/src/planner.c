@@ -37,7 +37,9 @@ implementation of planning state machine
 */
 #include <stddef.h>
 #include "planner.h"
-#include "arm_math.h"
+// #include "arm_math.h"
+#include "math.h"
+#define PI 3.14159265f
 #include "debug.h"
 
 static struct traj_eval plan_eval(struct planner *p, float t);

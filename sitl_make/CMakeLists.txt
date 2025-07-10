@@ -196,6 +196,7 @@ set(SRCS
   ${CF2_SITL_SRCS_DIR}/modules/src/controller/controller_indi.c
   ${CF2_SITL_SRCS_DIR}/modules/src/controller/position_controller_indi.c
   ${CF2_SITL_SRCS_DIR}/modules/src/controller/controller_brescianini.c
+  ${CF2_SITL_SRCS_DIR}/modules/src/controller/controller_lee.c
   ${CF2_SITL_SRCS_DIR}/modules/src/power_distribution_sitl.c
 
   #High level commander

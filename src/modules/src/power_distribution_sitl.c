@@ -40,6 +40,7 @@
 
 #include "config.h"
 #include "math.h"
+#include "platform_defaults.h"
 
 #include "crtp.h"
 
@@ -193,6 +194,10 @@ bool powerDistributionCap(const motors_thrust_uncapped_t* motorThrustBatCompUnca
 
 uint32_t powerDistributionGetIdleThrust() {
   return idleThrust;
+}
+
+float powerDistributionGetMaxThrust() {
+  return STABILIZER_NR_OF_MOTORS * THRUST_MAX;
 }
 
 uint16_t getMotorRatio(int id)

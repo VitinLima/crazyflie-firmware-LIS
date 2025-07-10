@@ -29,6 +29,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 #include "system.h"
 #include "log.h"
@@ -53,7 +54,9 @@
 #include "supervisor.h"
 
 #include "estimator.h"
-//#include "usddeck.h"
+#ifndef CONFIG_PLATFORM_SITL
+#include "usddeck.h"
+#endif
 #include "quatcompress.h"
 #include "statsCnt.h"
 #include "static_mem.h"
