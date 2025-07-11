@@ -73,11 +73,13 @@ static struct crtpLinkOperations socketlinkOp =
 };
 
 static CRTPPacket p;
-static uint8_t socket_buff[33];
+static uint8_t socket_buff[34];
 
 static void socketlinkTask(void *param)
 {
   int recvlen;
+  char ping_header = 'p';
+  char data_header = 'd';
   while(1)
   {
     while (poll(&fds[0], (sizeof(fds[0]) / sizeof(fds[0])), -1) < 0){
@@ -91,8 +93,16 @@ static void socketlinkTask(void *param)
       // Fetch a socket data
       recvlen = recvfrom(fd, p.raw, sizeof(p.raw), 0, (struct sockaddr *)&remaddr, &addrlen);
       if (recvlen > 0){
-        p.size = recvlen - 1; // We remove the header size
-        xQueueSend(crtpPacketDelivery, &p, 0);
+        // if(p.raw[0] == 'd'){
+          printf("UDP packet received\n");
+          p.size = recvlen - 1; // We remove the header size
+          xQueueSend(crtpPacketDelivery, &p, 0);
+        // } else if (p.raw[0] == 'p'){
+        //   printf("UDP ping received\n");
+        //   sendto(fd, &ping_header, 1, 0, (struct sockaddr *)&remaddr, addrlen); // sends a ping packet
+        // } else{
+        //   printf("Unknow packet type received\n");
+        // }
       } else {
         DEBUG_PRINT("error : %s \n" , strerror(errno));
       }
@@ -122,6 +132,7 @@ static int socketlinkSendPacket(CRTPPacket *p)
     return 0;
 
   dataSize = p->size + 1;
+  // socket_buff[0] = 'd'; // packet is data
   memcpy(&(socket_buff[0]) , p->raw , dataSize);
   dataSize = sendto(fd, socket_buff, dataSize, 0, (struct sockaddr *)&remaddr, addrlen);
   // DEBUG_PRINT("sending : port: %d channel: %d data:%d %d %d size: %d\n" , p->port , p->channel, p->data[0], p->data[1], p->data[2], p->size);
