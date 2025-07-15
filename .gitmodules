@@ -13,3 +13,6 @@
 [submodule "vendor/unity"]
 	path = vendor/unity
 	url = https://github.com/throwtheswitch/unity.git
+[submodule "tools/crazyflie-simulation-LIS"]
+	path = tools/crazyflie-simulation-LIS
+	url = https://github.com/VitinLima/crazyflie-simulation-LIS.git
